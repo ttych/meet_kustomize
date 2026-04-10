@@ -1,0 +1,21 @@
+---
+namespace: tp7-kustomize
+
+# Raccourci natif de Kustomize pour mettre à jour une image
+images:
+  - name: spring-petclinic
+    newName: ghcr.io/ttych/spring-petclinic
+    newTag: 4.0.0-SNAPSHOT2
+
+resources:
+  - "../base"
+
+patches:
+  # Si replicas.yaml est un JSON Patch (op: replace) :
+  - path: replicas.yaml
+    target:
+      kind: Deployment
+      name: clinic-deploy
+
+  # Si patch-routing.yaml est un YAML classique (Strategic Merge) :
+  - path: patch-routing.yaml
